@@ -7,11 +7,13 @@ This project aims to predict AMC (AMC) stock price movements by analyzing News A
 - **Stock Data Collection:** Fetching TSLA historical stock data via `yfinance`.
 - **Feature Engineering & Modeling:** - Aggregating daily sentiment scores and using them—along with today’s closing price—as features to predict the next day’s increase via a logistic regression model.
 
+```bash
 tsla_sentiment_analysis/
 ├── README.md
 ├── requirements.txt
 ├── main.py                   # Main script that ties everything together
 └── src/
-    ├── data_collection.py        # Collects Twitter and TSLA stock data
+    ├── data_collection.py        # Collects AMC News and AMC stock data
     ├── sentiment_analysis.py     # Applies sentiment analysis to tweets
     ├── model.py                  # Prepares the dataset and trains a Logistic Regression model
+```

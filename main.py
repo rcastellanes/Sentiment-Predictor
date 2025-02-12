@@ -1,6 +1,7 @@
 # src/main.py
 
 from datetime import datetime
+from datetime import timedelta
 from src.data_collection import collect_news_data, get_stock_data
 from src.sentiment_analysis import apply_sentiment_to_df, aggregate_daily_sentiment
 from src.model import prepare_stock_trend, merge_sentiment_stock, train_model

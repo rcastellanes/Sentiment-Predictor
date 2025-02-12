@@ -33,7 +33,7 @@ This project aims to predict AMC (AMC) stock price movements by analyzing News A
 
 
 ```bash
-tsla_sentiment_analysis/
+Sentiment-Predictor/
 ├── README.md
 ├── requirements.txt
 ├── main.py                   # Main script that ties everything together

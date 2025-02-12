@@ -3,6 +3,7 @@ import yfinance as yf
 import requests
 import concurrent.futures
 from datetime import timedelta
+import time
 
 def get_news(api_key, query, from_date, page=1, page_size=100, max_retries=5):
     """

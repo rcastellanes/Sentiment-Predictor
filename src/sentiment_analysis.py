@@ -1,18 +1,28 @@
-from nltk.sentiment.vader import SentimentIntensityAnalyzer
 import nltk
+from nltk.sentiment import SentimentIntensityAnalyzer
+import pandas as pd
 
-# Download the VADER lexicon (only once)
+# Download VADER lexicon if not already available
 nltk.download('vader_lexicon', quiet=True)
 
-# Initialize the sentiment analyzer globally
-sia = SentimentIntensityAnalyzer()
+def analyze_sentiment(text):
+    """
+    Return the compound sentiment score for a given text.
+    """
+    sia = SentimentIntensityAnalyzer()
+    sentiment = sia.polarity_scores(text)
+    return sentiment['compound']
 
-def analyze_sentiment(text: str) -> float:
+def apply_sentiment_to_df(df, text_column='content'):
     """
-    Analyze the sentiment of a text string using VADER.
-    
-    :param text: The text to analyze.
-    :return: The compound sentiment score (range: -1 to 1).
+    Apply sentiment analysis to a DataFrame column containing article content.
     """
-    sentiment_scores = sia.polarity_scores(text)
-    return sentiment_scores['compound']
+    df['sentiment'] = df[text_column].apply(analyze_sentiment)
+    return df
+
+def aggregate_daily_sentiment(df):
+    """
+    Aggregate sentiment scores by day (mean compound score).
+    """
+    daily_sentiment = df.groupby('date')['sentiment'].mean().reset_index()
+    return daily_sentiment

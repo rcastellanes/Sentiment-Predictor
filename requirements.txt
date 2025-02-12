@@ -1,6 +1,9 @@
 pandas
-snscrape
+GoogleNews
+newspaper3k
 yfinance
 nltk
 scikit-learn
 matplotlib
+dateparser
+requests

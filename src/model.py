@@ -1,44 +1,36 @@
-import matplotlib.pyplot as plt
-from sklearn.linear_model import LinearRegression
+import pandas as pd
+from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.metrics import accuracy_score
 
-def build_and_train_model(data):
+def prepare_stock_trend(stock_data):
     """
-    Build, train, and evaluate a linear regression model using aggregated daily sentiment
-    and today's closing price to predict the next day's closing price.
-
-    :param data: DataFrame containing at least 'sentiment', 'Close', and 'target' columns.
+    Create a 'trend' column: 1 if the stock closed higher than it opened, else 0.
+    Format the date column to match the sentiment data.
     """
-    # Features: aggregated sentiment and today's closing price
-    X = data[['sentiment', 'Close']]
-    # Target: next day's closing price
-    y = data['target']
+    stock_data['trend'] = (stock_data['Close'] > stock_data['Open']).astype(int)
+    stock_data['date'] = stock_data['Date'].dt.strftime("%Y-%m-%d")
+    return stock_data[['date', 'trend']]
 
-    # Split data into training and testing sets (without shuffling to preserve time order)
-    split_index = int(0.8 * len(data))
-    X_train, X_test = X.iloc[:split_index], X.iloc[split_index:]
-    y_train, y_test = y.iloc[:split_index], y.iloc[split_index:]
+def merge_sentiment_stock(daily_sentiment, stock_trend):
+    """
+    Merge daily sentiment with the stock trend data.
+    """
+    merged = pd.merge(daily_sentiment, stock_trend, on='date', how='inner')
+    return merged
 
-    # Train a linear regression model
-    model = LinearRegression()
+def train_model(merged_data):
+    """
+    Train a Logistic Regression model to predict stock trend from daily sentiment.
+    """
+    X = merged_data[['sentiment']]
+    y = merged_data['trend']
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    
+    model = LogisticRegression()
     model.fit(X_train, y_train)
-
-    # Predict and evaluate
+    
     y_pred = model.predict(X_test)
-    mse = mean_squared_error(y_test, y_pred)
-    r2 = r2_score(y_test, y_pred)
-
-    print("Evaluation Metrics:")
-    print(f"Mean Squared Error (MSE): {mse:.4f}")
-    print(f"R² Score: {r2:.4f}")
-
-    # Plot actual vs. predicted closing prices
-    plt.figure(figsize=(10, 5))
-    plt.plot(y_test.reset_index(drop=True), label="Actual", marker='o')
-    plt.plot(y_pred, label="Predicted", marker='x')
-    plt.legend()
-    plt.title("Predicted vs Actual TSLA Next Day Closing Prices")
-    plt.xlabel("Sample (Ordered in Time)")
-    plt.ylabel("TSLA Closing Price")
-    plt.show()
+    acc = accuracy_score(y_test, y_pred)
+    print("Model Accuracy:", acc)
+    return model

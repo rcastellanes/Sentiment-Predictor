@@ -6,7 +6,7 @@ This project aims to predict AMC (AMC) stock price movements by analyzing News A
 - **Data Collection:** Using NewsAPI to gather recent tweets containing "AMC".
 - **Sentiment Analysis:** Analyzing each news article’s sentiment with NLTK’s VADER.
 - **Stock Data Collection:** Fetching TSLA historical stock data via `yfinance`.
-- **Feature Engineering & Modeling:** - Aggregating daily sentiment scores and using them—along with today’s closing price—as features to predict the next day’s increase via a logistic regression model.
+- **Feature Engineering & Modeling:** - Aggregating daily sentiment scores and using them—along with today’s closing price—as features to predict the next day’s increase via a logistic regression model. I wanted to use a simple classification model to determine whether or not I have a viable product.
   
 ## Challenges Faced
 - **Data Noise:** News articles were limited to the main content of the article. I also chose the top 100 articles by popularity defined by NewsAPI, which may have a natural bias with content.

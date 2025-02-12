@@ -1,6 +1,4 @@
 pandas
-GoogleNews
-newspaper3k
 yfinance
 nltk
 scikit-learn

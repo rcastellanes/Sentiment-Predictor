@@ -8,10 +8,10 @@ from src.model import prepare_stock_trend, merge_sentiment_stock, train_model
 from dotenv import load_dotenv
 import os
 
-# Load environment variables from .env
-load_dotenv()
+# Only load .env if NEWS_API_KEY isn't already set
+if not os.getenv("NEWS_API_KEY"):
+    load_dotenv()
 
-# Retrieve the API key from the environment
 news_api_key = os.getenv("NEWS_API_KEY")
 if not news_api_key:
     raise ValueError("No API key found. Please set the NEWS_API_KEY environment variable.")

@@ -4,14 +4,27 @@ from datetime import datetime
 from src.data_collection import collect_news_data, get_stock_data
 from src.sentiment_analysis import apply_sentiment_to_df, aggregate_daily_sentiment
 from src.model import prepare_stock_trend, merge_sentiment_stock, train_model
+from dotenv import load_dotenv
+import os
+
+# Load environment variables from .env
+load_dotenv()
+
+# Retrieve the API key from the environment
+news_api_key = os.getenv("NEWS_API_KEY")
+if not news_api_key:
+    raise ValueError("No API key found. Please set the NEWS_API_KEY environment variable.")
 
 def main():
     # Replace with your NewsAPI key
     news_api_key = "45a8fb7524ce41f2803f21b771eb5617"
     
-    # Define the date range for analysis: January 11 to February 11
-    start_date = "2025-01-11"
-    end_date = "2025-02-11"
+    end_date = datetime.today()
+    start_date = end_date - timedelta(days=30)
+    
+    # Format the dates as strings in YYYY-MM-DD format
+    start_date_str = start_date.strftime("%Y-%m-%d")
+    end_date_str = end_date.strftime("%Y-%m-%d")
     
     # Query for AMC (limiting to the ticker)
     query = "AMC"

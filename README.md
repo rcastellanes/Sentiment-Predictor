@@ -31,7 +31,23 @@ This project aims to predict AMC (AMC) stock price movements by analyzing News A
 - **API Management:** Use caching or batching to manage API rate limits.
 - **Compliance:** Ensure compliance with data privacy and API usage policies.
 
+## Setup and Installation
+1. **Clone the Repository:**
+   ```bash
+   git clone https://github.com/yourusername/tsla_sentiment_analysis.git
+   cd tsla_sentiment_analysis
+2. **Run virtual environment and install dependencies:**
+   ```bash
+   python3 -m venv venv
+   source venv/bin/activate  # (Windows: venv\Scripts\activate)
+   pip install -r requirements.txt
+3. **Run virtual environment and install dependencies:**
+   ```bash
+   python main.py
 
+Note: May need a separate NewsAPI key
+
+## Repository Structure
 ```bash
 Sentiment-Predictor/
 ├── README.md
